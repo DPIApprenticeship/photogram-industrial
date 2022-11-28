@@ -24,4 +24,6 @@ class FollowRequest < ApplicationRecord
   belongs_to :sender, class_name: "User"
 
   enum status: { pending: "pending", rejected: "rejected", accepted: "accepted"}
+
+  validates :recipient_id, uniqueness: { scope: :sender_id, message: "Already followed"}
 end
