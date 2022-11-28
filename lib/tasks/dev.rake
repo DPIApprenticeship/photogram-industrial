@@ -34,12 +34,35 @@ task sample_data: :environment do
   end
 
   users.each do |user|
-    rand(5).times do 
+
+    rand(15).times do 
+      quote = [Faker::TvShows::Simpsons.quote, Faker::TvShows::GameOfThrones.quote, Faker::TvShows::Seinfeld.quote].sample
       Photo.create(
-        image: "some image",
-        caption: Faker::TvShows::Simpsons.quote,
+        image: "https://robohash.org/#{rand(9999)}",
+        caption: quote,
         owner_id: user.id
       )
+    end
+
+    users.each do |user|
+      rand(15).times do
+        Like.create(
+          photo_id: rand(Photo.count),
+          fan_id: user.id
+        )
+      end
+    end
+
+    users.each do |user|
+      rand(10).times do 
+        quote = Faker::TvShows::StrangerThings.quote
+        Comment.create(
+          photo_id: rand(Photo.count),
+          author_id: user.id,
+          body: quote
+        )
+      end
+
     end
   end
 
@@ -48,4 +71,6 @@ task sample_data: :environment do
   p "#{User.count} users have been created."
   p "#{FollowRequest.count} follow requests have been created"
   p "#{Photo.count} photos have been created"
+  p "#{Like.count} likes have been created"
+  p "#{Comment.count} comments have been created"
 end
