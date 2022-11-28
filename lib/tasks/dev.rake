@@ -33,6 +33,19 @@ task sample_data: :environment do
     end
   end
 
+  users.each do |user|
+    rand(5).times do 
+      Photo.create(
+        image: "some image",
+        caption: Faker::TvShows::Simpsons.quote,
+        owner_id: user.id
+      )
+    end
+  end
+
+  
+
   p "#{User.count} users have been created."
   p "#{FollowRequest.count} follow requests have been created"
+  p "#{Photo.count} photos have been created"
 end
