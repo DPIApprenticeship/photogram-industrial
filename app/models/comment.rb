@@ -1,4 +1,4 @@
 class Comment < ApplicationRecord
-  belongs_to :author
-  belongs_to :photo
+  belongs_to :author, class_name: "User"
+  belongs_to :photo, class_name: "User"
 end
